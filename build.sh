@@ -7,8 +7,8 @@ this="KaminariKernel";
 # Set up the cross-compiler (pt. 1)
 export ARCH=arm;
 export SUBARCH=arm;
-export PATH=$HOME/Toolchains/Linaro-4.9-CortexA7/bin:$PATH;
-export CROSS_COMPILE=arm-cortex_a7-linux-gnueabihf-;
+export PATH=$HOME/Toolchains/Linaro-4.9-Generic/bin:$PATH;
+export CROSS_COMPILE=arm-linux-gnueabihf-;
 
 # Clear the screen
 clear;
@@ -18,7 +18,7 @@ bold=`tput bold`;
 normal=`tput sgr0`;
 
 # Let's start...
-echo -e "Building KaminariKernel (AOSP)...\n";
+echo -e "Building KaminariKernel...\n";
 
 devicestr="Which device do you want to build for?
 1. Moto G (falcon)
