@@ -140,9 +140,9 @@ echo -e "Copying zImage-dtb...";
 cp -f arch/arm/boot/zImage-dtb $devicedir/;
 
 # Copy modules
-mkdir -p $devicedir/modules/pronto;
-find . -type f -name "*.ko" -exec cp {} $devicedir/modules \;
-mv $devicedir/modules/wlan.ko $devicedir/modules/pronto/pronto_wlan.ko;
+mkdir -p $devicedir/modules/system/lib/modules/pronto;
+find . -type f -name "*.ko" -exec cp {} $devicedir/modules/system/lib/modules/ \;
+mv $devicedir/modules/system/lib/modules/wlan.ko $devicedir/modules/system/lib/modules/pronto/pronto_wlan.ko;
 
 # Set the zip's name
 zipname="kaminari_"$version"_"`echo "${device}"`;
