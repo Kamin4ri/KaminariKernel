@@ -151,8 +151,8 @@ else
 fi;
 
 # Define directories (zip, out)
-maindir=$HOME/Kernel/Zip_AOSP;
-outdir=$HOME/Kernel/Out_AOSP/$device;
+maindir=$HOME/Kernel/zip/lineage;
+outdir=$HOME/Kernel/out/lineage/$device;
 devicedir=$maindir/$device;
 
 # Make the zip and out dirs if they don't exist
@@ -166,9 +166,9 @@ cp -f arch/arm/boot/zImage-dtb $devicedir/;
 
 # Set the zip's name
 if [[ $forceperm = "Y" ]]; then
-	zipname="Kaminari_"$version"_"`echo "${device^}"`"_SELinuxForcePerm";
+	zipname="kaminari_"$version"_"`echo "${device}"`"_forceperm";
 else
-	zipname="Kaminari_"$version"_"`echo "${device^}"`;
+	zipname="kaminari_"$version"_"`echo "${device}"`;
 fi;
 
 # Zip the stuff we need & finish
@@ -177,8 +177,6 @@ echo -e $device > $devicedir/device.txt;
 echo -e "Version: $version" > $devicedir/version.txt;
 cd $maindir/common;
 zip -r9 $outdir/$zipname.zip . > /dev/null;
-cd $maindir/std;
-zip -r9 $outdir/$zipname.zip * > /dev/null;
 cd $devicedir;
 zip -r9 $outdir/$zipname.zip * > /dev/null;
 echo -e "Done!"
