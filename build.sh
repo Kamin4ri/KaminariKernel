@@ -140,7 +140,7 @@ echo -e "Copying zImage...";
 cp -f arch/arm/boot/zImage $devicedir/;
 
 # Copy device tree blobs
-./dtbtool -s 2048 -p scripts/dtc -o $devicedir/dt.img arch/arm/boot/dts/qcom;
+./dtbtool --force-v2 -s 2048 -p scripts/dtc -o $devicedir/dt.img arch/arm/boot/dts/qcom;
 
 # Copy modules
 mkdir -p $devicedir/modules/system/lib/modules/pronto;
