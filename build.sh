@@ -7,7 +7,7 @@ this="KaminariKernel";
 # Set up the cross-compiler (pt. 1)
 export ARCH=arm;
 export SUBARCH=arm;
-export PATH=$HOME/Toolchains/Linaro-4.9-Generic/bin:$PATH;
+export PATH=$HOME/Toolchains/Linaro-5.5-Generic/bin:$PATH;
 export CROSS_COMPILE=arm-linux-gnueabihf-;
 
 # Clear the screen
@@ -140,7 +140,17 @@ echo -e "Copying zImage...";
 cp -f arch/arm/boot/zImage $devicedir/;
 
 # Copy device tree blobs
-./dtbtool --force-v2 -s 2048 -p scripts/dtc -o $devicedir/dt.img arch/arm/boot/dts/qcom;
+echo -e "Copying device tree blobs...";
+case $device in
+	"cedric")
+		cp arch/arm/boot/dts/qcom/msm8937-cedric-p* $devicedir/;;
+	"potter")
+		cp arch/arm/boot/dts/qcom/msm8953-potter-p* $devicedir/;;
+	"montana")
+		cp arch/arm/boot/dts/qcom/msm8937-montana-p* $devicedir/;;
+	"sanders")
+		cp arch/arm/boot/dts/qcom/msm8953-sanders-p* $devicedir/;;
+esac;
 
 # Copy modules
 mkdir -p $devicedir/modules/system/lib/modules/pronto;
