@@ -7,7 +7,7 @@ this="KaminariKernel";
 # Set up the cross-compiler (pt. 1)
 export ARCH=arm;
 export SUBARCH=arm;
-export PATH=$HOME/Toolchains/Linaro-5.5-Generic/bin:$PATH;
+export PATH=$HOME/Toolchains/Linaro-4.9-Generic/bin:$PATH;
 export CROSS_COMPILE=arm-linux-gnueabihf-;
 
 # Clear the screen
