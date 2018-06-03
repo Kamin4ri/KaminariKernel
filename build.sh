@@ -143,13 +143,13 @@ cp -f arch/arm/boot/zImage $devicedir/;
 echo -e "Copying device tree blobs...";
 case $device in
 	"cedric")
-		cp arch/arm/boot/dts/qcom/msm8937-cedric-p* $devicedir/;;
+		cp arch/arm/boot/dts/qcom/msm8937-cedric-p*.dtb $devicedir/;;
 	"potter")
-		cp arch/arm/boot/dts/qcom/msm8953-potter-p* $devicedir/;;
+		cp arch/arm/boot/dts/qcom/msm8953-potter-p*.dtb $devicedir/;;
 	"montana")
-		cp arch/arm/boot/dts/qcom/msm8937-montana-p* $devicedir/;;
+		cp arch/arm/boot/dts/qcom/msm8937-montana-p*.dtb $devicedir/;;
 	"sanders")
-		cp arch/arm/boot/dts/qcom/msm8953-sanders-p* $devicedir/;;
+		cp arch/arm/boot/dts/qcom/msm8953-sanders-p*.dtb $devicedir/;;
 esac;
 
 # Copy modules
