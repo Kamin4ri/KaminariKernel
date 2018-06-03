@@ -135,13 +135,9 @@ if [ ! -d $maindir ] || [ ! -d $outdir ]; then
 	mkdir -p $maindir && mkdir -p $outdir;
 fi;
 
-# Use zImage
-echo -e "Copying zImage...";
-cp -f arch/arm/boot/zImage $devicedir/;
-
-# Compile device tree blob
-echo -e "Compiling device tree blob..."
-./dtbtool -s 2048 -o $devicedir/dt.img -p scripts/dtc arch/arm/boot;
+# Use zImage-dtb since AK officially supports it now
+echo -e "Copying zImage-dtb...";
+cp -f arch/arm/boot/zImage-dtb $devicedir/;
 
 # Copy modules
 mkdir -p $devicedir/modules/system/lib/modules/pronto;
