@@ -63,8 +63,8 @@ while read -p "$cleanstr" clean; do
 	case $clean in
 		"y" | "Y" | "yes" | "Yes")
 			echo -e "Cleaning everything...\n";
-			make --quiet mrproper && \ 
-			find . -iname "*.dtb" -exec rm -f {} \; && \ 
+			make --quiet mrproper && \
+			find . -iname "*.dtb" -exec rm -f {} \; && \
 				echo -e "Done!\n";
 			break;;
 		"n" | "N" | "no" | "No" | "" | " ")
