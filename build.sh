@@ -135,21 +135,34 @@ if [ ! -d $maindir ] || [ ! -d $outdir ]; then
 	mkdir -p $maindir && mkdir -p $outdir;
 fi;
 
-# Use zImage
-echo -e "Copying zImage...";
-cp -f arch/arm/boot/zImage $devicedir/;
-
-# Copy device tree blobs
-echo -e "Copying device tree blobs...";
+# Generate zImage-dtb manually
+echo -e "Generating zImage-dtb...";
 case $device in
 	"cedric")
-		cp arch/arm/boot/dts/qcom/msm8937-cedric-p*.dtb $devicedir/;;
+		cat arch/arm/boot/zImage arch/arm/boot/dts/qcom/msm8937-cedric-p1.dtb \
+			arch/arm/boot/dts/qcom/msm8937-cedric-p2.dtb \
+			arch/arm/boot/dts/qcom/msm8937-cedric-p3.dtb \
+			arch/arm/boot/dts/qcom/msm8937-cedric-p4.dtb \
+			arch/arm/boot/dts/qcom/msm8937-cedric-p5.dtb > $devicedir/zImage-dtb;;
 	"potter")
-		cp arch/arm/boot/dts/qcom/msm8953-potter-p*.dtb $devicedir/;;
+		cat arch/arm/boot/zImage arch/arm/boot/dts/qcom/msm8953-potter-p0a.dtb \
+			arch/arm/boot/dts/qcom/msm8953-potter-p1a.dtb \
+			arch/arm/boot/dts/qcom/msm8953-potter-p1b.dtb \
+			arch/arm/boot/dts/qcom/msm8953-potter-p2a.dtb \
+			arch/arm/boot/dts/qcom/msm8953-potter-p2a2.dtb \
+			arch/arm/boot/dts/qcom/msm8953-potter-p2b.dtb \
+			arch/arm/boot/dts/qcom/msm8953-potter-p3a.dtb > $devicedir/zImage-dtb;;
 	"montana")
-		cp arch/arm/boot/dts/qcom/msm8937-montana-p*.dtb $devicedir/;;
+		cat arch/arm/boot/zImage arch/arm/boot/dts/qcom/msm8937-montana-p0.dtb \
+			arch/arm/boot/dts/qcom/msm8937-montana-p1a.dtb \
+			arch/arm/boot/dts/qcom/msm8937-montana-p1b.dtb \
+			arch/arm/boot/dts/qcom/msm8937-montana-p2.dtb \
+			arch/arm/boot/dts/qcom/msm8937-montana-p3.dtb > $devicedir/zImage-dtb;;
 	"sanders")
-		cp arch/arm/boot/dts/qcom/msm8953-sanders-p*.dtb $devicedir/;;
+		cat arch/arm/boot/zImage arch/arm/boot/dts/qcom/msm8953-sanders-p1.dtb \
+			arch/arm/boot/dts/qcom/msm8953-sanders-p2.dtb \
+			arch/arm/boot/dts/qcom/msm8953-sanders-p3.dtb \
+			arch/arm/boot/dts/qcom/msm8953-sanders-p4.dtb > $devicedir/zImage-dtb;;
 esac;
 
 # Copy modules
