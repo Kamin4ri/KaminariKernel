@@ -57,13 +57,15 @@ while read -p "$devicestr" dev; do
 	esac;
 done;	
 
-# Clean everything via `make clean` or `make mrproper`.
-# Recommended if there were extensive changes to the source code.
+# Clean everything via `make mrproper`.
+# Recommended if there were extensive changes to the source code or if building for a different device.
 while read -p "$cleanstr" clean; do
 	case $clean in
 		"y" | "Y" | "yes" | "Yes")
 			echo -e "Cleaning everything...\n";
-			make --quiet mrproper && echo -e "Done!\n";
+			make --quiet mrproper && \ 
+			find . -iname "*.dtb" -exec rm -f {} \; && \ 
+				echo -e "Done!\n";
 			break;;
 		"n" | "N" | "no" | "No" | "" | " ")
 			echo -e "Not cleaning anything.\n";
@@ -135,35 +137,11 @@ if [ ! -d $maindir ] || [ ! -d $outdir ]; then
 	mkdir -p $maindir && mkdir -p $outdir;
 fi;
 
-# Generate zImage-dtb manually
-echo -e "Generating zImage-dtb...";
-case $device in
-	"cedric")
-		cat arch/arm/boot/zImage arch/arm/boot/dts/qcom/msm8937-cedric-p1.dtb \
-			arch/arm/boot/dts/qcom/msm8937-cedric-p2.dtb \
-			arch/arm/boot/dts/qcom/msm8937-cedric-p3.dtb \
-			arch/arm/boot/dts/qcom/msm8937-cedric-p4.dtb \
-			arch/arm/boot/dts/qcom/msm8937-cedric-p5.dtb > $devicedir/zImage-dtb;;
-	"potter")
-		cat arch/arm/boot/zImage arch/arm/boot/dts/qcom/msm8953-potter-p0a.dtb \
-			arch/arm/boot/dts/qcom/msm8953-potter-p1a.dtb \
-			arch/arm/boot/dts/qcom/msm8953-potter-p1b.dtb \
-			arch/arm/boot/dts/qcom/msm8953-potter-p2a.dtb \
-			arch/arm/boot/dts/qcom/msm8953-potter-p2a2.dtb \
-			arch/arm/boot/dts/qcom/msm8953-potter-p2b.dtb \
-			arch/arm/boot/dts/qcom/msm8953-potter-p3a.dtb > $devicedir/zImage-dtb;;
-	"montana")
-		cat arch/arm/boot/zImage arch/arm/boot/dts/qcom/msm8937-montana-p0.dtb \
-			arch/arm/boot/dts/qcom/msm8937-montana-p1a.dtb \
-			arch/arm/boot/dts/qcom/msm8937-montana-p1b.dtb \
-			arch/arm/boot/dts/qcom/msm8937-montana-p2.dtb \
-			arch/arm/boot/dts/qcom/msm8937-montana-p3.dtb > $devicedir/zImage-dtb;;
-	"sanders")
-		cat arch/arm/boot/zImage arch/arm/boot/dts/qcom/msm8953-sanders-p1.dtb \
-			arch/arm/boot/dts/qcom/msm8953-sanders-p2.dtb \
-			arch/arm/boot/dts/qcom/msm8953-sanders-p3.dtb \
-			arch/arm/boot/dts/qcom/msm8953-sanders-p4.dtb > $devicedir/zImage-dtb;;
-esac;
+# Copy zImage & generate dt.img
+echo -e "Copying zImage...\n";
+cp -rf arch/arm/boot/zImage $devicedir/;
+echo -e "Compiling device tree...\n";
+./dtbTool -o $devicedir/dt.img arch/arm/boot/dts/qcom/ -s 2048 -p scripts/dtc/;
 
 # Copy modules
 mkdir -p $devicedir/modules/system/lib/modules/pronto;
