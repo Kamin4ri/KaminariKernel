@@ -45,6 +45,9 @@ CONFIG_IOSCHED_ZEN=y
 # CONFIG_DEFAULT_BFQ is not set
 # CONFIG_DEFAULT_ZEN is not set
 
+# DTV Driver
+CONFIG_MOTO_DTV=m
+
 # ------------------------------------------
 # Kaminari tweaks end here
 # ------------------------------------------
@@ -492,10 +495,10 @@ CONFIG_ARCH_NR_GPIO=1024
 CONFIG_PREEMPT=y
 CONFIG_PREEMPT_COUNT=y
 CONFIG_HZ_FIXED=0
-CONFIG_HZ_100=y
+# CONFIG_HZ_100 is not set
 # CONFIG_HZ_200 is not set
 # CONFIG_HZ_250 is not set
-# CONFIG_HZ_300 is not set
+CONFIG_HZ_300=y
 # CONFIG_HZ_500 is not set
 # CONFIG_HZ_1000 is not set
 CONFIG_HZ=100
@@ -1161,10 +1164,10 @@ CONFIG_RFKILL_LEDS=y
 # CONFIG_NET_9P is not set
 # CONFIG_CAIF is not set
 # CONFIG_CEPH_LIB is not set
-CONFIG_NFC=y
-CONFIG_NFC_NQ=y
+# CONFIG_NFC is not set
+# CONFIG_NFC is not set
 CONFIG_PN544=y
-CONFIG_PN544_CTRLDEV=y
+# CONFIG_PN544_CTRLDEV is not set
 CONFIG_IPC_ROUTER=y
 CONFIG_IPC_ROUTER_SECURITY=y
 CONFIG_HAVE_BPF_JIT=y
@@ -1423,7 +1426,8 @@ CONFIG_MSM_ULTRASOUND=y
 CONFIG_FUSB302=y
 # CONFIG_FUSB302_LEGACY is not set
 # CONFIG_SENSORHUB_DEBUG_LOGGING is not set
-# CONFIG_SENSORS_STML0XX is not set
+CONFIG_SENSORS_STML0XX=y
+CONFIG_SENSORS_SH_AK09912=y
 
 #
 # SCSI device support
