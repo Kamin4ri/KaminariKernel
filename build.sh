@@ -7,7 +7,7 @@ this="KaminariKernel";
 # Set up the cross-compiler (pt. 1)
 export ARCH=arm;
 export SUBARCH=arm;
-export PATH=$HOME/Toolchains/Linaro-4.9-Generic/bin:$PATH;
+export PATH=$HOME/Toolchains/Linaro-4.9/bin:$PATH;
 export CROSS_COMPILE=arm-linux-gnueabihf-;
 
 # Clear the screen
@@ -23,8 +23,7 @@ echo -e "Building KaminariKernel...\n";
 devicestr="Which device do you want to build for?
 1. Moto G (falcon)
 2. Moto G 4G (peregrine) 
-3. Moto G 2014 (titan)
-4. Moto G 2014 LTE (thea) ";
+3. Moto G 2014 (titan) / G 2014 LTE (thea) ";
 
 cleanstr="Do you want to remove everything from the last build? (Y/N)
 
@@ -45,13 +44,9 @@ while read -p "$devicestr" dev; do
 			device="peregrine";
 			break;;
 		"3")
-			echo -e "Selected device: Moto G 2014 (titan)\n"
+			echo -e "Selected devices: Moto G 2014 3G/LTE (titan/thea)\n"
 			device="titan";
 			break;;
-		"4")
-			echo -e "Selected device: Moto G 2014 LTE (thea)\n"
-                        device="thea";
-                        break;;	
 		*)
 			echo -e "\nInvalid option. Try again.\n";;
 	esac;
@@ -126,11 +121,7 @@ echo -e "Build started on:\n`date +"%A, %d %B %Y @ %H:%M:%S %Z (GMT %:z)"`\n`dat
 starttime=`date +"%s"`;
 			
 # Build the kernel
-if [[ $device != "thea" ]]; then
-	make "$device"_defconfig;
-else
-	make titan_defconfig;
-fi;
+make "$device"_defconfig;
 
 # Permissive selinux? Edit .config
 if [[ $forceperm = "Y" ]]; then
@@ -166,14 +157,19 @@ cp -f arch/arm/boot/zImage-dtb $devicedir/;
 
 # Set the zip's name
 if [[ $forceperm = "Y" ]]; then
-	zipname="kaminari_"$version"_"`echo "${device}"`"_forceperm";
+	zipname="kaminari_"$version"_"${device}"_forceperm";
 else
-	zipname="kaminari_"$version"_"`echo "${device}"`;
+	zipname="kaminari_"$version"_"${device};
 fi;
 
 # Zip the stuff we need & finish
 echo -e "Creating flashable ZIP...\n";
-echo -e $device > $devicedir/device.txt;
+# Note: titan & thea - unified build
+if [[ $device = "titan" ]]; then
+	echo -e "Unified titan/thea build" > $devicedir/device.txt;
+else
+	echo -e $device > $devicedir/device.txt;
+fi;
 echo -e "Version: $version" > $devicedir/version.txt;
 cd $maindir/common;
 zip -r9 $outdir/$zipname.zip . > /dev/null;
